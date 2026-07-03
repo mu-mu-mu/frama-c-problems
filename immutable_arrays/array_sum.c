@@ -1,11 +1,12 @@
-/*
+/*@
   axiomatic SumArray {
-  logic integer sumArr(int *a, int n);
+  logic integer sumArr(int *a, integer n) reads a[0 .. n-1];
   axiom case_m:
-    \forall integer m;
-    0 <= m < n ==> sumArr(a, m) == a[m] + sumArr(a, m-1);
+    \forall integer m, int *a;
+    (0 < m ==> (sumArr(a, m) == ( sumArr(a, m-1) + a[m-1] )));
   axiom case_m0:
-    sumArr(a, 0) == a[0];
+    \forall int *a, integer m;
+    m == 0 ==> sumArr(a, 0) == 0;
   }
 */
 
@@ -20,7 +21,7 @@ int sumArray(int *a, int n) {
     /*@
         loop invariant 0 <= p <= n;
         loop invariant (sum == sumArr(a, p));
-        loop assigns sum; 
+        loop assigns sum, p;
     */
     while (p < n) {
         sum = sum + a[p];

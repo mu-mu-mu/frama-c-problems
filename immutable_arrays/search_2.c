@@ -1,14 +1,14 @@
 /*@
     requires n > 0;
+    requires \valid_read(a + (0..n-1));
     assigns \nothing;
-    ensures \valid_read(a + (0..n-1));
 
 behavior present:
     assumes \exists integer k; 0 <= k < n && x == a[k];
     ensures \result == 1;
 
 behavior not_present:
-    assumes  \exists integer k; 0 <= k < n && x != a[k];
+    assumes !\exists integer k; 0 <= k < n && x == a[k];
     ensures \result == 0;
 */
 int arraySearch(int *a, int x, int n) {
