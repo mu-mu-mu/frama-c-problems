@@ -10,7 +10,7 @@
         ensures \result == 1;
 
     behavior all_not_even:
-        assumes \exists  integer k; 0 <= k < n ==> a[k]%2 != 0;
+        assumes \exists  integer k; 0 <= k < n && a[k]%2 != 0;
         ensures \result == 0;
 
     disjoint behaviors;
