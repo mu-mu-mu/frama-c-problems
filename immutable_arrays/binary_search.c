@@ -10,7 +10,7 @@
         ensures a[\result] == x ;
 
     behavior not_present:
-        assumes \exists integer k ; 0 <= k < n && a[k] != x ;
+        assumes !\exists integer k ; 0 <= k < n && a[k] == x ;
         ensures \result == -1;
 
     disjoint behaviors;
@@ -24,9 +24,10 @@ int binarysearch(int* a, int x, int n) {
     int p;
 
     /*@
-        loop invariant 0 <= low <= n  && 0 <= high <= n;
-        loop invariant \forall integer k; (0 <= k < n) && (a[k] == x) ==> (low <= k < high);
-        loop assigns low, high;
+        loop invariant -1 <= low < high <= n;
+        loop invariant \forall integer k; (0 <= k < n) && (a[k] == x) ==> (low < k < high);
+        loop assigns low, high, p;
+        loop variant high - low;
     */
     while (low+1 < high) {
         p = (low + high) / 2;
